@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
  */
 public class Main_10282 {
 
-    private static int[] dis = new int[1000];
+    private static int[] dis = new int[10001];
 
     public static void main(String[] args) throws IOException {
 
@@ -63,31 +63,33 @@ public class Main_10282 {
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>(); // 우선순위큐 -> 이진힙
         priorityQueue.add(new Node(start, 0));
         dis[start] = 0;
-        while (!priorityQueue.isEmpty()) {
-            Node node = priorityQueue.poll();
-            int dist = node.distance;
-            int curr = node.index;
 
-            //노드의 거리가 이미 최단거리라면 패스
-            if ( dis[curr] < dist ) {
+        while(!priorityQueue.isEmpty()){
+            Node node = priorityQueue.poll();
+            int curr = node.index;
+            int distance = node.distance;
+
+            if(dis[curr] < distance){
                 continue;
             }
 
-            for (int i=0; i<graph.get(curr).size(); i++) {
-                int total = dis[curr] + graph.get(curr).get(i).getDistance();
 
-                if (total < dis[graph.get(curr).get(i).getIndex()]) {
-                    dis[graph.get(curr).get(i).getIndex()] = total;
-                    priorityQueue.add(new Node(graph.get(curr).get(i).getIndex(),total));
-                }
+
+            ArrayList<Node> mid = graph.get(curr);
+            for( int i = 0 ; i < mid.size(); i++ ) {
+                int cost = dis[curr] + mid.get(i).distance;
+                if( dis[mid.get(i).index]  > cost ){
+                   dis[mid.get(i).index] = cost;
+                    priorityQueue.add(new Node(mid.get(i).index , mid.get(i).distance));
+               }
             }
-
         }
-
-    }//dijkstra
+    }
 
     static class Node implements Comparable<Node> {
-        int index, distance;
+        private int index;
+        private int distance;
+
         Node (int index, int distance) {
             this.index = index;
             this.distance = distance;
@@ -103,10 +105,8 @@ public class Main_10282 {
 
         @Override
         public int compareTo(Node o) {
-            if (this.distance < o.distance) {
-                return -1;
-            }
-            return 1;
+            return Integer.compare(o.distance, this.distance);
         }
+
     }
 }
