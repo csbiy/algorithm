@@ -45,7 +45,7 @@ public class Main_17086 {
     private static int getSafeDistance(int posX, int posY, int[][] graph , boolean[][] visited ) {
 
 
-        Deque<Pair> queue =  new ArrayDeque<>();
+        Deque<Pair> queue =  new ArrayDeque<>(); // java에서는 queue 를 LinkedList로 사용한다고 함
         queue.addLast(new Pair(posX,posY,0));
         visited[posX][posY] = true;
         while(!queue.isEmpty()){
