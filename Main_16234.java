@@ -22,7 +22,7 @@ public class Main_16234 {
                 graph[i][j] = Integer.parseInt(src[j]);
             }
         }
-        Queue<Node> queueA = new LinkedList<>();
+        Queue<Node> queue = new LinkedList<>();
         int day = 0;
         while (true){
             boolean[][] isVisited = new boolean[n][n];
@@ -33,11 +33,11 @@ public class Main_16234 {
                         continue;
                     }
                     Queue<Node> visitedNode = new LinkedList<>(); // 방문노드 큐 (한 연결성분)
-                    queueA.add(new Node(i,j));
+                    queue.add(new Node(i,j));
                     isVisited[i][j] = true;
                     int sum = 0;
-                    while (!queueA.isEmpty()) { //  bfs
-                        Node node = queueA.poll();
+                    while (!queue.isEmpty()) { //  bfs
+                        Node node = queue.poll();
                         sum += graph[node.x][node.y];
                         visitedNode.add(node);
                         for (int k = 0; k < 4; k++) { // 상하좌우 탐색
@@ -47,7 +47,7 @@ public class Main_16234 {
                                 int diff = Math.abs(graph[posX][posY] - graph[node.x][node.y]);
                                 if (diff >= l && diff <= r) { // 문제의 조건과 일치하다면 방문노드 큐에넣고 방문
                                     isVisited[posX][posY] = true;
-                                    queueA.add(new Node(posX, posY));
+                                    queue.add(new Node(posX, posY));
                                 }
                             }
                         }
